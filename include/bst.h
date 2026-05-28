@@ -33,28 +33,17 @@ class BST {
     }
   }
 
-  bool searchNode(const Node* node, const T& value) const {
-    if (!node) return false;
+  // Поиск частоты слова (int)
+  int searchNode(const Node* node, const T& value) const {
+    if (!node) return 0;
     if (value < node->key) return searchNode(node->left, value);
     if (node->key < value) return searchNode(node->right, value);
-    return true;
+    return node->count;   // нашли
   }
 
   int depthNode(const Node* node) const {
     if (!node) return -1;
     return 1 + std::max(depthNode(node->left), depthNode(node->right));
-  }
-
-  int sizeNode(const Node* node) const {
-    if (!node) return 0;
-    return 1 + sizeNode(node->left) + sizeNode(node->right);
-  }
-
-  int frequencyNode(const Node* node, const T& value) const {
-    if (!node) return 0;
-    if (value < node->key) return frequencyNode(node->left, value);
-    if (node->key < value) return frequencyNode(node->right, value);
-    return node->count;
   }
 
   void clearNode(Node* node) {
@@ -81,22 +70,13 @@ class BST {
     insertNode(root, value);
   }
 
-  bool search(const T& value) const {
+  // Возвращает частоту слова (0, если отсутствует)
+  int search(const T& value) const {
     return searchNode(root, value);
   }
 
   int depth() const {
     return depthNode(root);
-  }
-
-  // количество уникальных слов (размер дерева)
-  int count() const {
-    return sizeNode(root);
-  }
-
-  // частота конкретного слова (0 – если отсутствует)
-  int count(const T& value) const {
-    return frequencyNode(root, value);
   }
 
   std::vector<std::pair<T, int>> getAll() const {

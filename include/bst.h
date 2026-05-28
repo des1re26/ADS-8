@@ -2,10 +2,9 @@
 #ifndef INCLUDE_BST_H_
 #define INCLUDE_BST_H_
 
-#include <stdexcept>
 #include <algorithm>
-#include <utility>
 #include <string>
+#include <utility>
 #include <vector>
 
 template <typename T>
@@ -41,19 +40,16 @@ class BST {
     return true;
   }
 
-  // глубина как количество рёбер (для пустого -1, для листа 0)
   int depthNode(const Node* node) const {
     if (!node) return -1;
     return 1 + std::max(depthNode(node->left), depthNode(node->right));
   }
 
-  // количество узлов в поддереве
   int sizeNode(const Node* node) const {
     if (!node) return 0;
     return 1 + sizeNode(node->left) + sizeNode(node->right);
   }
 
-  // поиск частоты по значению
   int frequencyNode(const Node* node, const T& value) const {
     if (!node) return 0;
     if (value < node->key) return frequencyNode(node->left, value);
@@ -89,18 +85,17 @@ class BST {
     return searchNode(root, value);
   }
 
-  // глубина (высота) дерева – количество рёбер
   int depth() const {
     return depthNode(root);
   }
 
   // количество уникальных слов (размер дерева)
-  int size() const {
+  int count() const {
     return sizeNode(root);
   }
 
-  // частота слова, 0 если отсутствует
-  int getFrequency(const T& value) const {
+  // частота конкретного слова (0 – если отсутствует)
+  int count(const T& value) const {
     return frequencyNode(root, value);
   }
 
